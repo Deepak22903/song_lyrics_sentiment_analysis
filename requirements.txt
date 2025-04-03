@@ -1,7 +1,19 @@
+# requirements.txt
+
+# Core Data Handling and Analysis
 pandas
-numpy
 nltk
 textblob
+
+# Frontend Framework
+streamlit
+
+# Visualization (Core, Plotly, WordCloud)
 matplotlib
 seaborn
-scikit-learn  
+plotly
+wordcloud
+
+# Potential additions (like N-grams)
+scikit-learn
+
