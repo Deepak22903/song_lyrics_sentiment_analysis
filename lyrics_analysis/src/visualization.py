@@ -45,11 +45,13 @@ def plot_sentiment_distribution(df, sentiment_column, save_dir):
         plt.savefig(save_path)
         print(f"Saved sentiment distribution plot to: {save_path}")
         plt.close() # Close the plot figure to free memory
+        return save_path
 
     except Exception as e:
         print(f"Error generating sentiment distribution plot: {e}")
         # Optionally close plot if it was created before error
         plt.close()
+        return None
 
 
 # --- Other visualization functions (plot_sentiment_by_category, etc.) ---
@@ -135,10 +137,12 @@ def plot_sentiment_by_category(df, category_column, sentiment_column, top_n=10, 
             print(f"Saved sentiment by {category_column} plot to: {save_path}")
 
         plt.close() # Close the plot figure
+        return save_path
 
     except Exception as e:
         print(f"Error generating sentiment by {category_column} plot: {e}")
         plt.close()
+        return None
 
 
 def plot_sentiment_trends_over_time(df, year_column, sentiment_column, save_dir=None):
@@ -223,9 +227,11 @@ def plot_sentiment_trends_over_time(df, year_column, sentiment_column, save_dir=
             print(f"Saved sentiment trends plot to: {save_path}")
 
         plt.close() # Close the plot figure
+        return save_path
 
     except Exception as e:
         print(f"Error generating sentiment trends plot: {e}")
         plt.close()
+        return None
 
 # Add any other visualization functions you might have here...

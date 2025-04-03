@@ -6,6 +6,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import LinearSVC
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
+from .preprocessing import preprocess_text # Use relative import if in same package
 
 # --- Lexicon-Based Analysis (TextBlob) ---
 def analyze_sentiment_textblob(text):
@@ -204,3 +205,46 @@ def predict_ml_sentiment(texts, model, vectorizer):
     predictions = model.predict(texts_tfidf)
     print("Prediction complete.")
     return predictions
+
+
+# --- NEW FUNCTION for single text analysis ---
+def analyze_single_text_sentiment(text: str) -> dict:
+    """
+    Preprocesses and analyzes sentiment of a single text string using TextBlob.
+
+    Args:
+        text (str): The input text (e.g., lyrics).
+
+    Returns:
+        dict: Dictionary containing 'polarity', 'subjectivity', and 'sentiment' category.
+              Returns default neutral values if input is invalid.
+    """
+    if not text or not isinstance(text, str):
+        return {'polarity': 0.0, 'subjectivity': 0.0, 'sentiment': 'neutral'}
+
+    processed_text = preprocess_text(text) # Preprocess the input
+    if not processed_text:
+        return {'polarity': 0.0, 'subjectivity': 0.0, 'sentiment': 'neutral'}
+
+    try:
+        analysis = TextBlob(processed_text)
+        polarity = analysis.sentiment.polarity
+        subjectivity = analysis.sentiment.subjectivity
+
+        # Same categorization logic as before
+        threshold = 0.05
+        if polarity > threshold:
+            sentiment_category = 'positive'
+        elif polarity < -threshold:
+            sentiment_category = 'negative'
+        else:
+            sentiment_category = 'neutral'
+
+        return {
+            'polarity': polarity,
+            'subjectivity': subjectivity,
+            'sentiment': sentiment_category
+        }
+    except Exception as e:
+        print(f"Error analyzing single text: {e}")
+        return {'polarity': 0.0, 'subjectivity': 0.0, 'sentiment': 'neutral'}

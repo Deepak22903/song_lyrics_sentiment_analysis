@@ -7,6 +7,20 @@ from nltk.stem import WordNetLemmatizer
 
 import ssl # Added for potential SSL certificate issues during download
 
+lemmatizer = WordNetLemmatizer()
+stop_words = set(stopwords.words('english'))
+
+def preprocess_text(text):
+    """Applies preprocessing steps to a single string."""
+    if not isinstance(text, str):
+        return "" # Return empty string for non-string input
+    text = text.lower()
+    text = re.sub(r'\[.*?\]', '', text) # Remove text in square brackets (like [Chorus])
+    text = re.sub(r'[^a-z\s]', '', text) # Remove punctuation and numbers
+    words = text.split()
+    words = [lemmatizer.lemmatize(word) for word in words if word not in stop_words]
+    return ' '.join(words)
+
 def download_nltk_data():
     """
     Downloads necessary NLTK datasets if they are not found.
