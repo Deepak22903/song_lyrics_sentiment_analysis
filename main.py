@@ -108,6 +108,3 @@ def run_full_analysis() -> Tuple[Optional[pd.DataFrame], Optional[Dict[str, str]
 
     return df_analyzed, plot_paths
 
-# Remove or comment out the old __main__ block if app.py is the entry point
-# if __name__ == "__main__":
-#     run_analysis_pipeline() # Old function call
